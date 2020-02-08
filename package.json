@@ -1,0 +1,20 @@
+{
+  "name": "local-job-executer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:recover": "./scripts/start-recover.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edenriquez/local-job-executer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/edenriquez/local-job-executer/issues"
+  },
+  "homepage": "https://github.com/edenriquez/local-job-executer#readme"
+}

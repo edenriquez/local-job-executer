@@ -1,0 +1,12 @@
+version: '3'
+services:
+  db:
+    image: 'healthcheck/mongo'
+    container_name: "amazon-bot-backup"
+    ports:
+      - 27016:27017
+  redis:
+    image: 'healthcheck/redis'
+    container_name: "amazon-bot-redis"
+    ports:
+      - 6379:6379
