@@ -1,9 +1,9 @@
 const puppeteer = require('puppeteer');
 const axios = require('axios');
 const commons = require('./commons/commons');
-const config = require('dotenv');
 import {
-  PRODUCT_STATUSES
+  PRODUCT_STATUSES,
+  CONSTANTS
 } from '../config/constants'
 
 
@@ -76,7 +76,7 @@ module.exports.scrapProduct = async (url, passedCategory, passedVendor) => {
       };
 
       await browser.close()
-      axios.defaults.baseURL = config.BACKEND_BASE_API
+      axios.defaults.baseURL = CONSTANTS.BACKEND_BASE_API
       axios.post('products/new', options)
         .then(async (res) => {
           resolve(res)
