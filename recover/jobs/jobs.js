@@ -43,11 +43,12 @@ module.exports.generateProduct = async (req, res) => {
   queue.every('*/10 * * * * *', job);
 
   // queue process
-  queue.process('every', async (Job) => {
+  queue.process('every', async (Job, done) => {
     scrapProduct(url, category, '')
       .then((res) => {
         if (res) {
           Job.complete()
+          done()
         }
       }).catch((err) => {
         // TODO: treat this case to report to some tool

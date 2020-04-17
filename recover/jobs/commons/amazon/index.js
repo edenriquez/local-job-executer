@@ -1,12 +1,11 @@
-import { getImageByPath } from "../shared";
+import {
+  getImageByPath
+} from "../shared";
 module.exports.getAmazonPrice = async (page) => {
   // TODO: fix this, temporal hack by getting value pointing to second index
-  const prices = (await page.$x("//*[starts-with(@id, 'priceblock_')]"))[2]
-  const textPrice = (await page.evaluate(el => {
-    return el.textContent;
-  }, prices));
-  const response = parseFloat(textPrice.replace('$', '').replace(',', ''))
-  return response ? response : 0
+  const price = await page.$eval('#priceblock_ourprice', el => el.textContent);
+  const first = parseFloat(price.replace('$', '').replace(',', ''))
+  return first ? first : 0
 }
 
 module.exports.getAmazonName = async (page) => {
