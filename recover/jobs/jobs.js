@@ -2,6 +2,10 @@ var errors = require('../errors/errors')
 var kue = require('kue-scheduler');
 
 import {
+  Types
+} from 'mongoose';
+
+import {
   Job,
   DoneCallback
 } from 'kue';
@@ -11,13 +15,18 @@ import {
 
 const PRIORITY_HIGH = "high"
 const RETRY_ATTEMPS = 3
+const newId = (prefix) => {
+  return `${prefix}_${Types.ObjectId()}`
+};
+
 
 module.exports.generateProduct = async (req, res) => {
   // queue setup
   let message;
   const queue = kue.createQueue()
-  const productName = req.body.name || '[new product]' + Math.random(100)
-  const queueName = `PROD/${productName}`
+  const productID = newId('prod')
+  const userId = req.body.user || ''
+  const queueName = `PROD/${productID}`
   // const description = `Attemp to scrap product ${productName}`
   const url = req.body.url;
   const category = req.body.category;
@@ -40,11 +49,11 @@ module.exports.generateProduct = async (req, res) => {
   });
 
 
-  queue.every('*/10 * * * * *', job);
+  queue.every('*/50 * * * * *', job);
 
   // queue process
   queue.process('every', async (Job, done) => {
-    scrapProduct(url, category, '')
+    scrapProduct(url, category, productID, userId, '')
       .then((res) => {
         if (res) {
           Job.complete()
@@ -53,6 +62,7 @@ module.exports.generateProduct = async (req, res) => {
       }).catch((err) => {
         // TODO: treat this case to report to some tool
         console.log('ERROR EXECUTING JOB', err);
+
       })
   });
 
