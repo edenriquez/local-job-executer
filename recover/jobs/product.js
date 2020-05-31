@@ -27,7 +27,7 @@ const vendors = {
   "bestbuy": new RegExp("bestbuy")
 };
 
-module.exports.scrapProduct = async (url, passedCategory, passedVendor) => {
+module.exports.scrapProduct = async (url, passedCategory, productId, userId, passedVendor) => {
   return new Promise(async (resolve, reject) => {
     const headlessActive = (process.env.GENERATED_WITH_KUE ? true : false)
     settings.headless = headlessActive
@@ -66,12 +66,14 @@ module.exports.scrapProduct = async (url, passedCategory, passedVendor) => {
       meta.price = price
 
       const options = {
+        id: productId,
         name: name,
         link: url,
         image: image,
         currentPrice: price,
         status: status,
         meta: meta,
+        userId: userId,
         category: category
       };
 

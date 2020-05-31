@@ -23,6 +23,9 @@ const productSchema = new mongoose.Schema({
   },
   status: { // published or unpublished, will help to control internally reviews
     type: String,
+  },
+  meta: {
+    type: Object,
   }
 });
 
